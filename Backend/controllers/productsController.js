@@ -89,7 +89,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const searchProduct = asyncHandler(async (req, res) => {
 
     try {
-        const products = await Product.findById(req.params.id);
+        const products = await Product.find({name: req.params.id});
         res.status(200).json({ message: "Product found", postData: products });
     } catch (error) {
         res.status(500).json({ error: "Product not found" });
