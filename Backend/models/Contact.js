@@ -2,16 +2,25 @@ const mongoose = require("mongoose")
 
 //create schema 
 const ContactSchema = new mongoose.Schema({
-   name: String,
-   email: String,
-   phone:{
-    type: Number
+   name: {
+      type: String,
+      required: true,
    },
-   password: String,
+   email: {
+      type: String,
+      required: true,
+   },
+   phone: {
+      type: Number,
+   },
+
    subject: String,
-   message: String
-   
-   
+   message: {
+      type: String,
+      required: true,
+   }
+
+
 });
 
 //export model
