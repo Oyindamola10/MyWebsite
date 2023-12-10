@@ -17,9 +17,9 @@ const createProduct = asyncHandler(async (req, res) => {
 
     try {
         const products = new Product({
-            name,
+            name: name.trim(),
             image,
-            price
+            price: price.trim(),
         })
         //save post
         await products.save();
@@ -29,6 +29,30 @@ const createProduct = asyncHandler(async (req, res) => {
         res.status(500).send({ error: "Error creating product", error })
     }
 });
+
+const addMutiples = asyncHandler(async (req, res) => {
+    const { items } = req.body;
+
+    if (!items?.length) {
+        res.status(400).send({ message: 'not working bitch' })
+    }
+
+    items.map(async (item) => {
+        console.log(item)
+        try {
+            const product = new Product({
+                name: item?.name,
+                price: item?.Price,
+                image: item?.image,
+            });
+            await product.save()
+            // res.status(200).send({ product: product })
+        } catch (error) {
+            res.status(400).send({ error: error.message })
+        }
+
+    })
+})
 
 //@desc fetch a product
 //@method GET
@@ -89,8 +113,8 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const searchProduct = asyncHandler(async (req, res) => {
 
     try {
-        const products = await Product.find({name: req.params.id});
-        res.status(200).json({ message: "Product found", postData: products });
+        const products = await Product.find({ name: req.params.id });
+        res.status(200).send({ message: "Product found", postData: products });
     } catch (error) {
         res.status(500).json({ error: "Product not found" });
     }
@@ -99,4 +123,4 @@ const searchProduct = asyncHandler(async (req, res) => {
 
 });
 
-module.exports = { createProduct, getProducts, updateProduct, deleteProduct, searchProduct }
+module.exports = { createProduct, getProducts, updateProduct, deleteProduct, searchProduct ,addMutiples }
