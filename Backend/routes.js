@@ -128,10 +128,12 @@ router.post('/signUp', async (req, res) => {
 //Cart end point
 router.post('/cart', async (req, res) => {
     //destructure request body
-    const { product_id } = req.body;
+    const {name, image,price} = req.body;
     //create new post object
     const cart = new Cart({
-        product_id
+        name,
+        price,
+        image
     })
 
     //save post
@@ -148,7 +150,7 @@ router.post('/cart', async (req, res) => {
 //get cart data
 router.get('/cart/:id', async (req, res) => {
     //find post
-    const cart = await Cart.findById(req.params.id);
+    const cart = await Cart.find(req.params.id);
 
     //handle error
     if (!cart) {
