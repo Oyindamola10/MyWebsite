@@ -6,6 +6,7 @@ dotenv.config();
 
 // Routes
 import AuthRoute from "./routes/auth.js";
+import ProductRoute from "./routes/product.js";
 import ContactRoute from "./routes/contact.js";
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 //use routes
 app.use("/api/auth", AuthRoute);
+app.use("/api/product", ProductRoute);
 app.use("/api/contact", ContactRoute);
 
 // Default route
