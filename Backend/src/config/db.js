@@ -1,15 +1,18 @@
-const mongoose = require('mongoose');
+import { connect } from "mongoose";
 
-const connectDb = async () => {
-    try {
-        const response = await mongoose.connect(process.env.MONGODB_URI);
-        console.log('database connected');
-    } catch (error) {
-        console.log('an error occured while trying to connect to db', error);
-    }
+const isLocal = process.env.NODE_ENV === "Develop";
+const DATABASE_URI = isLocal
+  ? process.env.LOCAL_DATABASE_URI
+  : process.env.MONGODB_URI;
 
-
+async function connectDB() {
+  try {
+    await connect(DATABASE_URI);
+    console.info("Connected to mongoDB cluster");
+  } catch (err) {
+    console.error("An error occured connecting to mongoDB cluster", err);
+    process.exit(1);
+  }
 }
 
-
-module.exports = { connectDb }
+export default connectDB;
